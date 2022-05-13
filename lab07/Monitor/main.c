@@ -70,10 +70,11 @@ void *cliente(void *thread_id) {
 }
 
 void *barbeiro() {
-    while (cabelos < 11) {    //parar o loop apos cortar todos os cabelos
+    int tipo = -1;
+    while (tipo != 1) {    //parar o loop apos cortar todos os cabelos
 
         //Barbeiro espera o sinal
-        cabelos += take();
+        tipo = take();
         printf("BARBEIRO: cortou cabelo do cliente.\n");
         fflush(stdout);
     }
