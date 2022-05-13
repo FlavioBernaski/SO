@@ -67,16 +67,20 @@ int take() {
         pthread_cond_wait(&condBarbeiro, &the_mutex);
 
     // desloca para esquerda os clientes que estão na cadeira de espera
-    for (int i = 0; i < 3; i++) {
-        bufferCliente[i] = bufferCliente[i + 1];
+    if (clienteCount >= 1) {
+        // desloca para esquerda os clientes que estão na cadeira de espera
+        for(int i=0; i<clienteCount; i++){
+            bufferCliente[i] = bufferCliente[i+1];
+        }
     }
-    bufferCliente[2] = 0;
 
     //reseta a ultima posição do bufferCliente, pois esta saindo da espera para a cadeira
-    bufferCadeiraBarbeiro = -1;
+    bufferCadeiraBarbeiro = bufferCliente[clienteCount];
+    bufferCliente[clienteCount] = -1;
+    clienteCount = clienteCount - 1;
 
     //Simula o tempo de corte
-    sleep(5);
+    sleep(3);
     //manda sinal para que possam se juntar no buffer de novo
     pthread_cond_signal(&clienteWait);
     pthread_mutex_unlock(&the_mutex); /* release the buffer */

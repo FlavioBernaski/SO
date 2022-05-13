@@ -1,12 +1,7 @@
 /*
-Descrição:
-   Programa multithread com uma solucao para o problema do PapaiNoel.
-   Na linha 67 tem um while() comentado para que o programa funcione totalmente como especificado.
-   Os elfos demoram alguns segundos para comecar a pedir ajuda, isto eh devido ao sleep()
-Autores:
-   Caio Theodoro, Caio Miglioli, Alexandre Scrocaro
-Datas:
-   https://github.com/caiotheodoro/SO/commits/master/LAB7/ex1
+    * Funcionalidade: Programa para resolver o problema do Barbeiro Dorminhoco
+    * Alunos: Caio Luiz dos Santos, Flávio Augusto Bernaski da Silva, João Vitor Moraski Lunkes
+    * Data: 12/05/2022
 */
 
 #include <stdio.h>
@@ -17,7 +12,6 @@ Datas:
 
 /* --- funcoes --- */
 void *barbeiro();
-
 void *cliente(void *thread_id);
 
 /* --- main --- */
@@ -65,7 +59,7 @@ void *cliente(void *thread_id) {
 
     while (1) {
         // dormir por um tempo aleatorio
-        tempo = 2;
+        tempo = (rand() % 10);
         sleep(tempo);
 
         // cliente chegou na barbearia
@@ -76,16 +70,11 @@ void *cliente(void *thread_id) {
 }
 
 void *barbeiro() {
-    int descansando = 1;
-
-    while (descansando == 1) {    //parar o loop apos cortar todos os cabelos
+    while (cabelos < 11) {    //parar o loop apos cortar todos os cabelos
 
         //Barbeiro espera o sinal
-        descansando = take();
-
-        if (descansando == 1) {
-            printf("BARBEIRO: cortou cabelo do cliente.\n");
-        }
+        cabelos += take();
+        printf("BARBEIRO: cortou cabelo do cliente.\n");
         fflush(stdout);
     }
 }
